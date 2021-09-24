@@ -36,10 +36,11 @@ class MainActivity : AppCompatActivity() {
                 outPacket = DatagramPacket(
                     ByteArray(0), 0, InetAddress.getByName("192.168.5.108"),1497)
                 it.send(outPacket)
-                val gg=it.receive(inPacket)
+               it.receive(inPacket)
                 val xx=inPacket.data
+                val gg=xx.copyOfRange(0,inPacket.length)
 
-                Log.e("fuck",xx.size.toString())
+                Log.e("fuck",mainX(gg))
             }
 
 
