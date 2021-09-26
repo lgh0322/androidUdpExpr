@@ -23,12 +23,22 @@ import kotlinx.coroutines.sync.withLock
 import okhttp3.Response
 import java.io.ByteArrayInputStream
 import java.io.IOException
-import java.net.Socket
-import java.net.UnknownHostException
+import java.net.*
 
 class ClientFragment : Fragment() {
     lateinit var binding: FragmentClientBinding
 
+
+    val dataScope = CoroutineScope(Dispatchers.IO)
+
+
+    var inBuff = ByteArray(560)
+
+    // 以指定的字节数组创建准备接收数据的DatagramPacket对象
+    private val inPacket = DatagramPacket(inBuff, inBuff.size)
+
+
+    lateinit var diagramSocket: DatagramSocket
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +48,33 @@ class ClientFragment : Fragment() {
 
         binding = FragmentClientBinding.inflate(inflater, container, false)
 
+
+        dataScope.launch {
+            diagramSocket= DatagramSocket()
+            diagramSocket.broadcast
+            while (true){
+                DatagramSocket(1497).use {
+//                    val outPacket = DatagramPacket(
+//                        ByteArray(4){
+//                            it.toByte()
+//                        }, 4, InetAddress.getByName("192.168.5.104"),1497)
+//                    it.send(outPacket)
+                    it.broadcast=true
+                    while (true){
+                        it.receive(inPacket)
+                        val xx=inPacket.data
+                        val gg=xx.copyOfRange(0,inPacket.length)
+                        Log.e("fuck",ByteUtils.bytes2Hex(gg))
+                        delay(5)
+                    }
+
+
+
+                }
+                delay(1000)
+            }
+
+        }
 
         return binding.root
     }

@@ -23,12 +23,17 @@ import kotlinx.coroutines.sync.withLock
 import okhttp3.Response
 import java.io.ByteArrayInputStream
 import java.io.IOException
-import java.net.Socket
-import java.net.UnknownHostException
+import java.net.*
 
 class ServerFragment : Fragment() {
     lateinit var binding: FragmentServerBinding
+    val dataScope = CoroutineScope(Dispatchers.IO)
 
+
+    var inBuff = ByteArray(560)
+
+    // 以指定的字节数组创建准备接收数据的DatagramPacket对象
+    private val inPacket = DatagramPacket(inBuff, inBuff.size)
 
     private fun intToIp(paramInt: Int): String? {
         return ((paramInt.and(255)).toString() + "." + (paramInt.shr(8)
@@ -46,6 +51,20 @@ class ServerFragment : Fragment() {
 
 
 
+        dataScope.launch {
+            while (true){
+                DatagramSocket().use {
+                    val outPacket = DatagramPacket(
+                        ByteArray(4){
+                            it.toByte()
+                        }, 4, InetAddress.getByName("192.168.5.103"),1497)
+                    it.send(outPacket)
+
+                }
+                delay(1000)
+            }
+
+        }
 
 
         return binding.root
