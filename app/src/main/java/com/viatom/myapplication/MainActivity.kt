@@ -31,21 +31,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        dataScope.launch {
-            DatagramSocket().use {
-                outPacket = DatagramPacket(
-                    ByteArray(0), 0, InetAddress.getByName("192.168.5.108"),1497)
-                it.send(outPacket)
-               it.receive(inPacket)
-                val xx=inPacket.data
-                val gg=xx.copyOfRange(0,inPacket.length)
-
-                Log.e("fuck",mainX(gg))
-            }
-
-
-
-        }
+//        dataScope.launch {
+//            DatagramSocket().use {
+//                outPacket = DatagramPacket(
+//                    ByteArray(0), 0, InetAddress.getByName("192.168.5.108"),1497)
+//                it.send(outPacket)
+//               it.receive(inPacket)
+//                val xx=inPacket.data
+//                val gg=xx.copyOfRange(0,inPacket.length)
+//
+//                Log.e("fuck",mainX(gg))
+//            }
+//
+//
+//
+//        }
 
     }
     fun mainX(byteArray: ByteArray):String {
