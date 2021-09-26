@@ -59,7 +59,7 @@ class ClientFragment : Fragment() {
 //                            it.toByte()
 //                        }, 4, InetAddress.getByName("192.168.5.104"),1497)
 //                    it.send(outPacket)
-                    it.broadcast=true
+//                    it.broadcast=true
                     while (true){
                         it.receive(inPacket)
                         val xx=inPacket.data
