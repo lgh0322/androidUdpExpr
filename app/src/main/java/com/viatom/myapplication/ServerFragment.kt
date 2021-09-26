@@ -50,19 +50,28 @@ class ServerFragment : Fragment() {
 
         binding = FragmentServerBinding.inflate(inflater, container, false)
 
+        var gugu=0
 
 
         dataScope.launch {
             while (true){
                 DatagramSocket().use {
                     val outPacket = DatagramPacket(
-                        ByteArray(4){
-                            it.toByte()
-                        }, 4, InetAddress.getByName("192.168.5.103"),1497)
+                        ByteArray(60000){
+                            if(it==0){
+                                gugu.toByte()
+
+                            }else{
+                                it.toByte()
+                            }
+
+                        }, 60000, InetAddress.getByName("192.168.5.103"),1497)
                     it.send(outPacket)
+                    gugu++
 
                 }
-                delay(1000)
+                delay(5)
+
             }
 
         }

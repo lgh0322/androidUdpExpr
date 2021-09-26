@@ -32,7 +32,7 @@ class ClientFragment : Fragment() {
     val dataScope = CoroutineScope(Dispatchers.IO)
 
 
-    var inBuff = ByteArray(560)
+    var inBuff = ByteArray(2000000)
 
     // 以指定的字节数组创建准备接收数据的DatagramPacket对象
     private val inPacket = DatagramPacket(inBuff, inBuff.size)
@@ -47,7 +47,7 @@ class ClientFragment : Fragment() {
     ): View {
 
         binding = FragmentClientBinding.inflate(inflater, container, false)
-
+var cc=0
 
         dataScope.launch {
             diagramSocket= DatagramSocket()
@@ -62,10 +62,16 @@ class ClientFragment : Fragment() {
 //                    it.broadcast=true
                     while (true){
                         it.receive(inPacket)
-                        val xx=inPacket.data
-                        val gg=xx.copyOfRange(0,inPacket.length)
-                        Log.e("fuck",ByteUtils.bytes2Hex(gg))
-                        delay(5)
+                        cc+=inPacket.length
+                        if(cc>100000000){
+                            cc=0
+                            Log.e("fuck","fuck")
+                        }
+//                        val gg=xx.copyOfRange(0,inPacket.length)
+//
+//
+//                        Log.e("fuck",gg[0].toUByte().toInt().toString())
+                        delay(3)
                     }
 
 
